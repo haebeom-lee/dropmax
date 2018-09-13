@@ -21,12 +21,9 @@ If you found the provided code useful, please cite our work.
 ```
 
 ### Run examples
-1. Modify the ```--mnist_path``` in ```run.sh```
-2. Specify the ```--model``` (```softmax``` or ```dropmax```) in ```run.sh```
-3. Run 
-```
-./run.sh
-```
+1. Modify ```--mnist_path```, in ```run.sh```
+2. Specify ```--model``` among ```softmax``` or ```dropmax```, in ```run.sh```
+3. Run ```run.sh```
 
 ### Implementation Issue
 Note that LeNet is used as the base network for this code, whereas in the paper we used the network in the Tensorflow-Tutorial (refer to https://gist.github.com/saitodev/c4c7a8c83f5aa4a00e93084dd3f848c5). But the training results and tendencies are similar.
