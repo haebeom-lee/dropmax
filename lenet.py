@@ -32,7 +32,7 @@ def dropmax(x, y, training, name='dropmax', reuse=None):
     h = dense(x, 500, activation=relu, name=name+'/dense', reuse=reuse)
 
     # dropmax branches
-    o = dense(x, 10, name=name+'/logits', reuse=reuse)
+    o = dense(h, 10, name=name+'/logits', reuse=reuse)
     ph = dense(h, 10, name=name+'/ph_branch', reuse=reuse)
     rh = dense(h, 10, name=name+'/rh_branch', reuse=reuse)
     qh = tf.stop_gradient(ph) + rh
