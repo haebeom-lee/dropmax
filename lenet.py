@@ -10,7 +10,7 @@ def base_softmax(x, y, training, name='base_softmax', reuse=None):
     x = pool(x, name=name+'/pool2')
     x = flatten(x)
     h = dense(x, 500, activation=relu, name=name+'/dense', reuse=reuse)
-    o = dense(x, 10, name=name+'/logits', reuse=reuse)
+    o = dense(h, 10, name=name+'/logits', reuse=reuse)
 
     net = {}
     net['cent'] = cross_entropy(exp(o), y)
