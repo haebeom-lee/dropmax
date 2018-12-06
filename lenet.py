@@ -45,7 +45,7 @@ def dropmax(x, y, training, name='dropmax', reuse=None):
     z = genmask(q, y)
 
     net = {}
-    net['cent'] = cross_entropy((z+eps)*exp(o), y)
+    net['cent'] = cross_entropy(((z if training else p)+eps)*exp(o), y)
     net['acc'] = accuracy((p+eps)*exp(o), y)
     all_vars = tf.get_collection('variables', scope=name)
     net['weights'] = all_vars
