@@ -1,7 +1,7 @@
 # DropMax: Adaptive Variationial Softmax
 + Hae Beom Lee (KAIST), Juho Lee (Univ. Oxford), Saehoon Kim (AITRICS), Eunho Yang (KAIST), and Sung Ju Hwang (KAIST)
 
-This is the Tensor-Flow implementation for the paper DropMax: Adaptive Variationial Softmax (NIPS 2018) : https://arxiv.org/abs/1712.07834
+This is the Tensor-Flow implementation for the paper DropMax: Adaptive Variationial Softmax (NeurIPS 2018) : https://arxiv.org/abs/1712.07834
 
 ## Abstract
 <img align="right" width="400" src="https://github.com/haebeom-lee/dropmax/blob/master/concept.png">
@@ -15,7 +15,7 @@ If you found the provided code useful, please cite our work.
 @inproceedings{lee2018dropmax,
     author    = {Hae Beom Lee and Juho Lee and Saehoon Kim and Eunho Yang and Sung Ju Hwang},
     title     = {DropMax: Adaptive Variationial Softmax},
-    booktitle = {NIPS},
+    booktitle = {NeurIPS},
     year      = {2018}
 }
 ```
