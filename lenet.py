@@ -55,5 +55,5 @@ def dropmax(x, y, training, name='dropmax', reuse=None):
     # dropmax modules
     net['kl'] = kl_divergence(p, q, y)
     net['aux'] = auxloss(r, y)
-    net['ent'] = entropy(p)
+    net['neg_ent'] = neg_entropy(p)
     return net
