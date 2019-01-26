@@ -50,7 +50,7 @@ def train():
     if args.model == 'softmax':
         loss = net['cent'] + net['wd']
     else:
-        loss = net['cent'] + net['wd'] + net['kl'] + net['aux'] + net['ent']
+        loss = net['cent'] + net['wd'] + net['kl'] + net['aux'] + net['neg_ent']
 
     global_step = tf.train.get_or_create_global_step()
     lr_step = n_train_batches*args.n_epochs/3
