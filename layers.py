@@ -60,6 +60,6 @@ def auxloss(r, y):
     aux = tf.where(tf.equal(y,1), target, nontarget)
     return tf.reduce_sum(tf.reduce_mean(aux,0))
 
-def entropy(p):
-    ent = p*log(p) + (1-p)*log(1-p)
-    return tf.reduce_sum(tf.reduce_mean(ent,0))
+def neg_entropy(p):
+    neg_ent = p*log(p) + (1-p)*log(1-p)
+    return tf.reduce_sum(tf.reduce_mean(neg_ent,0))
