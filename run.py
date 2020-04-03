@@ -32,7 +32,7 @@ bs = args.batch_size
 N = args.N
 
 xtr, ytr, xva, yva, xte, yte = mnist_input(args.mnist_path, [N]*10)
-n_train_batches, n_val_batches, n_test_batches = N*10/bs, N*10/bs, 10000/bs
+n_train_batches, n_val_batches, n_test_batches = int(N*10/bs), int(N*10/bs), int(10000/bs)
 
 x = tf.placeholder(tf.float32, [None, 784])
 y = tf.placeholder(tf.float32, [None, 10])
@@ -53,7 +53,7 @@ def train():
         loss = net['cent'] + net['wd'] + net['kl'] + net['aux'] + net['neg_ent']
 
     global_step = tf.train.get_or_create_global_step()
-    lr_step = n_train_batches*args.n_epochs/3
+    lr_step = int(n_train_batches*args.n_epochs/3)
     lr = tf.train.piecewise_constant(tf.cast(global_step, tf.int32),
             [lr_step, lr_step*2], [1e-3, 1e-4, 1e-5])
     train_op = tf.train.AdamOptimizer(lr).minimize(loss, global_step=global_step)
