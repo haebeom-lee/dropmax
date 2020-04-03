@@ -59,7 +59,7 @@ def train():
     train_op = tf.train.AdamOptimizer(lr).minimize(loss, global_step=global_step)
 
     saver = tf.train.Saver(net['weights'])
-    logfile = open(os.path.join(savedir, 'train.log'), 'w', 0)
+    logfile = open(os.path.join(savedir, 'train.log'), 'wb', 0)
 
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
@@ -77,7 +77,7 @@ def train():
 
         line = 'Epoch %d start, learning rate %f' % (i+1, sess.run(lr))
         print(line)
-        logfile.write(line + '\n')
+        logfile.write((line + '\n').encode())
         train_logger.clear()
         start = time.time()
         for j in range(n_train_batches):
@@ -93,7 +93,7 @@ def train():
         val_logger.print_(header='val', epoch=i+1,
                 time=time.time()-start, logfile=logfile)
         print()
-        logfile.write('\n')
+        logfile.write(b'\n')
 
     logfile.close()
     saver.save(sess, os.path.join(savedir, 'model'))
@@ -103,7 +103,7 @@ def test():
     saver = tf.train.Saver(tnet['weights'])
     saver.restore(sess, os.path.join(savedir, 'model'))
 
-    logfile = open(os.path.join(savedir, 'test.log'), 'w', 0)
+    logfile = open(os.path.join(savedir, 'test.log'), 'wb', 0)
     logger = Accumulator('cent', 'acc')
     logger.accum(sess.run([tnet['cent'], tnet['acc']], {x:xte, y:yte}))
     logger.print_(header='test', logfile=logfile)
