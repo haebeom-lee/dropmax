@@ -32,7 +32,7 @@ bs = args.batch_size
 N = args.N
 
 xtr, ytr, xva, yva, xte, yte = mnist_input(args.mnist_path, [N]*10)
-n_train_batches, n_val_batches, n_test_batches = N*10/bs, N*10/bs, 10000/bs
+n_train_batches, n_val_batches, n_test_batches = int(N*10/bs), int(N*10/bs), int(10000/bs)
 
 x = tf.placeholder(tf.float32, [None, 784])
 y = tf.placeholder(tf.float32, [None, 10])
@@ -53,13 +53,13 @@ def train():
         loss = net['cent'] + net['wd'] + net['kl'] + net['aux'] + net['neg_ent']
 
     global_step = tf.train.get_or_create_global_step()
-    lr_step = n_train_batches*args.n_epochs/3
+    lr_step = int(n_train_batches*args.n_epochs/3)
     lr = tf.train.piecewise_constant(tf.cast(global_step, tf.int32),
             [lr_step, lr_step*2], [1e-3, 1e-4, 1e-5])
     train_op = tf.train.AdamOptimizer(lr).minimize(loss, global_step=global_step)
 
     saver = tf.train.Saver(net['weights'])
-    logfile = open(os.path.join(savedir, 'train.log'), 'w', 0)
+    logfile = open(os.path.join(savedir, 'train.log'), 'wb', 0)
 
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
@@ -77,7 +77,7 @@ def train():
 
         line = 'Epoch %d start, learning rate %f' % (i+1, sess.run(lr))
         print(line)
-        logfile.write(line + '\n')
+        logfile.write((line + '\n').encode())
         train_logger.clear()
         start = time.time()
         for j in range(n_train_batches):
@@ -93,7 +93,7 @@ def train():
         val_logger.print_(header='val', epoch=i+1,
                 time=time.time()-start, logfile=logfile)
         print()
-        logfile.write('\n')
+        logfile.write(b'\n')
 
     logfile.close()
     saver.save(sess, os.path.join(savedir, 'model'))
@@ -103,7 +103,7 @@ def test():
     saver = tf.train.Saver(tnet['weights'])
     saver.restore(sess, os.path.join(savedir, 'model'))
 
-    logfile = open(os.path.join(savedir, 'test.log'), 'w', 0)
+    logfile = open(os.path.join(savedir, 'test.log'), 'wb', 0)
     logger = Accumulator('cent', 'acc')
     logger.accum(sess.run([tnet['cent'], tnet['acc']], {x:xte, y:yte}))
     logger.print_(header='test', logfile=logfile)

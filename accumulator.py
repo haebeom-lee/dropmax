@@ -57,4 +57,4 @@ class Accumulator():
         print(line)
 
         if logfile is not None:
-            logfile.write(line + '\n')
+            logfile.write((line + '\n').encode())
